@@ -12,17 +12,12 @@ public class UsuarioMapper {
         return new ModelMapper().map(createDto, Usuario.class);
     }
 
-    public static UsuarioResponseDto toDto(Usuario usuario){
-        String role = usuario.getRole().name().substring("ROLE_".length());
-        PropertyMap<Usuario, UsuarioResponseDto> props = new PropertyMap<Usuario, UsuarioResponseDto>() {
-            @Override
-            protected void configure() {
-                map().setRole(role);
-            }
-        };
+    public static UsuarioResponseDto toDto(Usuario usuario) {
         ModelMapper mapper = new ModelMapper();
-        mapper.addMappings(props);
-        return mapper.map(usuario, UsuarioResponseDto.class);
+        UsuarioResponseDto dto = mapper.map(usuario, UsuarioResponseDto.class);
+        dto.setRole(usuario.getRole().name().substring("ROLE_".length()));
+        return dto;
     }
+
 
 }
